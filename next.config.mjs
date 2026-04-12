@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'export',
+  basePath: '/3d_portfolio',
+  assetPrefix: '/3d_portfolio',
+  images: {
+    unoptimized: true,
+  },
   // Removed invalid 'eslint' key
-  // Headers are disabled for static export mode 'output: export'
-  // if you move to a serverless environment, you can re-enable these.
 };
+
 
 
 export default nextConfig;

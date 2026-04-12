@@ -25,11 +25,12 @@ const config = {
   ],
   author: "Shaker Abdallah",
   email: "shakerabdallah66@gmail.com",
-  site: "https://nareshkhatri.site",
+  site: "https://shaker17s.github.io/3d_portfolio",
 
   // for github stars button
   githubUsername: "shaker17s",
-  githubRepo: "3d-portfolio",
+  githubRepo: "3d_portfolio",
+
 
   get ogImg() {
     return this.site + "/assets/seo/og-image.png";

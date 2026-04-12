@@ -28,7 +28,8 @@ import {
   SiVuedotjs,
 } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
-const BASE_PATH = "/assets/projects-screenshots";
+const BASE_PATH = "/3d_portfolio/assets/projects-screenshots";
+
 
 const ProjectsLinks = ({ live, repo }: { live: string; repo?: string }) => {
   return (
