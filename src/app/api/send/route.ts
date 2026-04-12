@@ -3,7 +3,8 @@ import { config } from "@/data/config";
 import { Resend } from "resend";
 import { z } from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
 
 const rateLimit = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT_MAX = 3;
@@ -41,8 +42,13 @@ export async function POST(req: Request) {
     if (!zodSuccess)
       return Response.json({ error: zodError?.message }, { status: 400 });
 
+    if (!resend) {
+      console.error("Resend API Key is missing. Email service is disabled.");
+      return Response.json({ error: "Email service is currently unavailable. Please contact me via social media." }, { status: 503 });
+    }
+
     const { data: resendData, error: resendError } = await resend.emails.send({
-      from: "Porfolio <onboarding@resend.dev>",
+      from: "Portfolio <onboarding@resend.dev>",
       to: [config.email],
       subject: "Contact me from portfolio",
       react: EmailTemplate({
@@ -53,11 +59,14 @@ export async function POST(req: Request) {
     });
 
     if (resendError) {
+      console.error("Resend Error:", resendError);
       return Response.json({ error: "Failed to send email" }, { status: 500 });
     }
 
     return Response.json(resendData);
   } catch (error) {
-    return Response.json({ error }, { status: 500 });
+    console.error("Server Error:", error);
+    return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
+
