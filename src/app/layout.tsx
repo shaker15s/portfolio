@@ -10,6 +10,7 @@ import AppOverlays from "@/components/app-overlays";
 import { Providers } from "@/components/providers";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import NeuralCursor from "@/components/ui/neural-cursor";
+import EmojiBackground from "@/components/emoji-background";
 
 export const metadata: Metadata = {
   title: config.title,
@@ -59,7 +60,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={[inter.variable, archivoBlack.variable, "font-display"].join(" ")} suppressHydrationWarning>
+    <html lang="en" className={[inter.variable, archivoBlack.variable, "font-display"].join(" ")} suppressHydrationWarning flush-mount="true">
       <head>
         <Script
           defer
@@ -89,6 +90,7 @@ export default function RootLayout({
       <body>
         <Providers>
           <NeuralCursor />
+          <EmojiBackground />
           <Header />
           {children}
           <Footer />

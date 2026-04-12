@@ -99,6 +99,13 @@ body {
   transition: all 0.3s ease;
 }
 
+.emoji-particle {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+
 
 @layer base {
   * {
