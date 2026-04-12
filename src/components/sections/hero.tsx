@@ -50,13 +50,13 @@ const HeroSection = () => {
                     <TooltipTrigger asChild>
                       <h1
                         className={cn(
-                          "-ml-[6px] leading-none font-thin text-transparent text-slate-800 text-left",
+                          "-ml-[6px] leading-none font-thin text-slate-800 text-left",
                           "font-thin text-7xl md:text-7xl lg:text-8xl xl:text-9xl",
-                          "cursor-default text-edge-outline font-display "
+                          "cursor-default font-display neural-gradient-text"
                         )}
                       >
                         {config.author.split(" ")[0]}
-                        <br className="md:block hiidden" />
+                        <br className="md:block hidden" />
                         {config.author.split(" ")[1]}
                       </h1>
                     </TooltipTrigger>
@@ -64,21 +64,21 @@ const HeroSection = () => {
                       side="top"
                       className="dark:bg-white dark:text-black"
                     >
-                      theres something waiting for you in devtools
+                      AI Engineer & Full-Stack Developer
                     </TooltipContent>
                   </Tooltip>
                 </BlurIn>
-                {/* <div className="md:block hidden bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0 w-screen h-px animate-fade-right animate-glow" /> */}
                 <BlurIn delay={1.2}>
                   <p
                     className={cn(
-                      "md:self-start md:mt-4 font-thin text-md text-slate-500 dark:text-zinc-400",
-                      "cursor-default font-display sm:text-xl md:text-xl whitespace-nowrap bg-clip-text "
+                      "md:self-start md:mt-4 font-normal text-md text-cyan-500/80 dark:text-cyan-400/90",
+                      "cursor-default font-display sm:text-xl md:text-2xl uppercase tracking-[0.2em]"
                     )}
                   >
-                    A Full Stack Web Developer
+                    AI Engineer & Full-Stack Developer
                   </p>
                 </BlurIn>
+
               </div>
               <div className="mt-8 flex flex-col gap-3 w-fit">
                 <Link

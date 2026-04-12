@@ -65,7 +65,27 @@ export default function RootLayout({
           src={process.env.UMAMI_DOMAIN}
           data-website-id={process.env.UMAMI_SITE_ID}
         ></Script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: config.author,
+              url: config.site,
+              jobTitle: "AI Engineer & Full-Stack Developer",
+              sameAs: [
+                config.social.linkedin,
+                config.social.github,
+                config.social.twitter,
+                config.social.instagram,
+              ],
+              description: config.description.long,
+            }),
+          }}
+        />
       </head>
+
       <body>
         <Providers>
           <Header />
