@@ -8,8 +8,8 @@ export const STATES = {
       rotation: { x: Math.PI / 18, y: -Math.PI / 12, z: 0 },
     },
     mobile: {
-      scale: { x: 0.32, y: 0.32, z: 0.32 },
-      position: { x: 0, y: -220, z: 0 },
+      scale: { x: 0.3, y: 0.3, z: 0.3 },
+      position: { x: 0, y: -250, z: 0 },
       rotation: { x: 0, y: 0, z: 0 },
     },
   },
@@ -85,18 +85,16 @@ export const getKeyboardState = ({
   const baseTransform = STATES[section][isMobile ? "mobile" : "desktop"];
 
   const getScaleOffset = () => {
+    if (typeof window === "undefined") return 1;
     const width = window.innerWidth;
-    const DESKTOP_REF_WIDTH = 1280;
-    const MOBILE_REF_WIDTH = 390;
-
-    const targetScale = isMobile
-      ? width / MOBILE_REF_WIDTH
-      : width / DESKTOP_REF_WIDTH;
-
-    const minScale = isMobile ? 0.5 : 0.5;
-    const maxScale = isMobile ? 0.6 : 1.15;
-
-    return Math.min(Math.max(targetScale, minScale), maxScale);
+    
+    // Linear scaling between mobile (390) and desktop (1280)
+    const t = Math.max(0, Math.min(1, (width - 390) / (1280 - 390)));
+    const minScale = isMobile ? 0.7 : 0.8;
+    const maxScale = isMobile ? 0.9 : 1.1;
+    
+    const scale = minScale + (maxScale - minScale) * t;
+    return scale;
   };
 
   const scaleOffset = getScaleOffset();
@@ -104,9 +102,9 @@ export const getKeyboardState = ({
   return {
     ...baseTransform,
     scale: {
-      x: Math.abs(baseTransform.scale.x * scaleOffset),
-      y: Math.abs(baseTransform.scale.y * scaleOffset),
-      z: Math.abs(baseTransform.scale.z * scaleOffset),
+      x: baseTransform.scale.x * scaleOffset,
+      y: baseTransform.scale.y * scaleOffset,
+      z: baseTransform.scale.z * scaleOffset,
     },
   };
 };

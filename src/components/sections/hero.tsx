@@ -27,7 +27,7 @@ const HeroSection = () => {
             "h-[calc(100dvh-3rem)] md:h-[calc(100dvh-4rem)] z-[2]",
             "col-span-1",
             "flex flex-col justify-start md:justify-center items-center md:items-start",
-            "pt-28 sm:pb-16 md:p-20 lg:p-24 xl:p-28"
+            "pt-28 pb-32 md:p-20 lg:p-24 xl:p-28"
           )}
         >
           {!isLoading && (
@@ -50,13 +50,13 @@ const HeroSection = () => {
                     <TooltipTrigger asChild>
                       <h1
                         className={cn(
-                          "-ml-[6px] leading-none font-thin text-slate-800 text-left",
-                          "font-thin text-7xl md:text-7xl lg:text-8xl xl:text-9xl",
+                          "-ml-[2px] md:-ml-[6px] leading-[1.1] md:leading-none font-thin text-slate-800 text-left",
+                          "text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl",
                           "cursor-default font-display neural-gradient-text"
                         )}
                       >
                         {config.author.split(" ")[0]}
-                        <br className="md:block hidden" />
+                        <br />
                         {config.author.split(" ")[1]}
                       </h1>
                     </TooltipTrigger>
@@ -71,7 +71,7 @@ const HeroSection = () => {
                 <BlurIn delay={1.2}>
                   <p
                     className={cn(
-                      "md:self-start md:mt-4 font-normal text-md text-cyan-500/80 dark:text-cyan-400/90",
+                      "md:self-start mt-4 md:mt-4 font-normal text-sm sm:text-md text-cyan-500/80 dark:text-cyan-400/90",
                       "cursor-default font-display sm:text-xl md:text-2xl uppercase tracking-[0.2em]"
                     )}
                   >
