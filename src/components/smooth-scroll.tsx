@@ -26,7 +26,11 @@ function SmoothScroll({ children, isInsideModal = false }: LenisProps) {
     <ReactLenis
       root
       options={{
-        duration: 2,
+        duration: 1.5,
+        lerp: 0.1,
+        smoothWheel: true,
+        wheelMultiplier: 1.1,
+        touchMultiplier: 2,
         prevent: (node) => {
           if (isInsideModal) return true;
           const modalOpen = node.classList.contains("modall");
@@ -34,6 +38,7 @@ function SmoothScroll({ children, isInsideModal = false }: LenisProps) {
         },
       }}
     >
+
       {children}
     </ReactLenis>
   );

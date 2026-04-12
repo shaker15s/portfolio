@@ -18,44 +18,70 @@ import { SectionHeader } from "./section-header";
 import SectionWrapper from "../ui/section-wrapper";
 
 const ProjectsSection = () => {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
+
   return (
-    <SectionWrapper id="projects" className="max-w-7xl mx-auto md:h-[130vh]">
+    <SectionWrapper id="projects" className="max-w-7xl mx-auto md:h-fit py-20 px-4">
       <SectionHeader id="projects" title="Projects" />
-      <div className="grid grid-cols-1 md:grid-cols-3">
+      <motion.div 
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      >
         {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
+          <motion.div key={project.id} variants={item}>
+            <ProjectCard project={project} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </SectionWrapper>
   );
 };
 
+
 const ProjectCard = ({ project }: { project: Project }) => {
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center w-full group">
       <ResponsiveDialog>
-        <ResponsiveDialogTrigger className="bg-transparent flex justify-center">
+        <ResponsiveDialogTrigger className="bg-transparent flex justify-center w-full">
           <div
-            className="relative w-[400px] h-auto rounded-lg overflow-hidden"
-            style={{ aspectRatio: "3/2" }}
+            className="relative w-full h-auto rounded-xl overflow-hidden glass-card neural-glow-hover transition-all duration-500"
+            style={{ aspectRatio: "16/10" }}
           >
             <Image
-              className="absolute w-full h-full top-0 left-0 hover:scale-[1.05] transition-all"
+              className="absolute w-full h-full top-0 left-0 object-cover group-hover:scale-[1.1] transition-transform duration-700 ease-out"
               src={project.src}
               alt={project.title}
-              width={300}
-              height={300}
+              width={600}
+              height={400}
             />
-            <div className="absolute w-full h-1/2 bottom-0 left-0 bg-gradient-to-t from-background via-background/85 to-transparent pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-100 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none">
               <div className="flex flex-col h-full items-start justify-end p-6">
-                <div className="text-lg text-left">{project.title}</div>
-                <div className="text-xs bg-primary text-primary-foreground rounded-lg w-fit px-2">
+                <div className="text-xl md:text-2xl font-display text-white mb-1 group-hover:translate-x-2 transition-transform duration-500">{project.title}</div>
+                <div className="text-[10px] uppercase tracking-widest text-cyan-400 bg-cyan-950/50 backdrop-blur-sm border border-cyan-500/30 rounded-full px-4 py-1">
                   {project.category}
                 </div>
               </div>
             </div>
           </div>
         </ResponsiveDialogTrigger>
+
 
         <ResponsiveDialogContent className="md:max-w-4xl md:h-[85vh] md:!flex md:flex-col md:overflow-hidden md:p-0 md:gap-0">
           {/* Sticky header */}

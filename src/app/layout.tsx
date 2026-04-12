@@ -9,6 +9,7 @@ import Script from "next/script";
 import AppOverlays from "@/components/app-overlays";
 import { Providers } from "@/components/providers";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import NeuralCursor from "@/components/ui/neural-cursor";
 
 export const metadata: Metadata = {
   title: config.title,
@@ -85,9 +86,9 @@ export default function RootLayout({
           }}
         />
       </head>
-
       <body>
         <Providers>
+          <NeuralCursor />
           <Header />
           {children}
           <Footer />
