@@ -64,7 +64,7 @@ const HeroSection = () => {
                       side="top"
                       className="dark:bg-white dark:text-black"
                     >
-                      AI Engineer & Full-Stack Developer
+                      Full-Stack Developer & Creative Technologist
                     </TooltipContent>
                   </Tooltip>
                 </BlurIn>
@@ -75,7 +75,7 @@ const HeroSection = () => {
                       "cursor-default font-display sm:text-xl md:text-2xl uppercase tracking-[0.2em]"
                     )}
                   >
-                    AI Engineer & Full-Stack Developer
+                    Full-Stack Developer & Creative Technologist
                   </p>
                 </BlurIn>
               </div>

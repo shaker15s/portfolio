@@ -96,15 +96,6 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 </span>
               </div>
               <div className="shrink-0 flex items-center gap-4">
-                {project.github && (
-                  <Link
-                    href={project.github}
-                    target="_blank"
-                    className="text-xs text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
-                  >
-                    Source
-                  </Link>
-                )}
                 <Link href={project.live} target="_blank">
                   <button className="group flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-1.5 rounded-full hover:bg-primary/80 transition-colors">
                     Visit

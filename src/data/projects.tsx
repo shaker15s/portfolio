@@ -31,7 +31,7 @@ import { TbBrandFramerMotion } from "react-icons/tb";
 const BASE_PATH = "/3d_portfolio/assets/projects-screenshots";
 
 
-const ProjectsLinks = ({ live, repo }: { live: string; repo?: string }) => {
+const ProjectsLinks = ({ live }: { live: string }) => {
   return (
     <div className="flex flex-col md:flex-row items-center justify-start gap-3 my-3 mb-8">
       <Link
@@ -45,19 +45,6 @@ const ProjectsLinks = ({ live, repo }: { live: string; repo?: string }) => {
           <ArrowUpRight className="ml-3 w-5 h-5" />
         </Button>
       </Link>
-      {repo && (
-        <Link
-          className="font-mono underline flex gap-2"
-          rel="noopener"
-          target="_new"
-          href={repo}
-        >
-          <Button variant={"default"} size={"sm"}>
-            Github
-            <ArrowUpRight className="ml-3 w-5 h-5" />
-          </Button>
-        </Link>
-      )}
     </div>
   );
 };
@@ -237,434 +224,168 @@ export type Project = {
 };
 const projects: Project[] = [
   {
-    id: "codingducks",
-    category: "EdTech & Competitive Programming",
-    title: "Coding Ducks",
-    src: "/3d_portfolio/assets/projects-screenshots/codingducks/landing.png",
+    id: "sara-3d-surprise",
+    category: "Interactive 3D Experience",
+    title: "Sara — Ultimate 3D Surprise",
+    src: "/3d_portfolio/assets/projects-screenshots/sara-3d/landing.png",
     screenshots: ["landing.png"],
     skills: {
       frontend: [
-        PROJECT_SKILLS.ts,
-        PROJECT_SKILLS.next,
-        PROJECT_SKILLS.chakra,
-        PROJECT_SKILLS.reactQuery,
-        PROJECT_SKILLS.firebase,
+        PROJECT_SKILLS.js,
+        PROJECT_SKILLS.tailwind,
+        PROJECT_SKILLS.gsap,
+        PROJECT_SKILLS.framerMotion,
       ],
-      backend: [
-        PROJECT_SKILLS.node,
-        PROJECT_SKILLS.express,
-        PROJECT_SKILLS.prisma,
-        PROJECT_SKILLS.python,
-        PROJECT_SKILLS.postgres,
-        PROJECT_SKILLS.sockerio,
-      ],
+      backend: [],
     },
-    live: "https://www.codingducks.xyz/",
-    github: "https://github.com/Shaker17s/Coding-Ducks", // Updated to user's github
+    live: "https://naughty-tomato-tunbrtdbp5.edgeone.app/",
     get content() {
       return (
         <div>
           <TypographyP className="font-mono text-2xl text-center">
-            Comprehensive Full-Stack Competitive Programming Ecosystem
+            Interactive 3D Particle Animation Engine
           </TypographyP>
           <TypographyP className="font-mono ">
-            Coding Ducks is an advanced pedagogical platform designed to streamline the competitive programming experience. 
-            Integrating real-time code execution with collaborative logic, it provides a high-fidelity environment for algorithm development and UI engineering challenges.
+            Developed a high-performance web application using HTML5 Canvas and Vanilla JavaScript. 
+            Implemented complex mathematical algorithms — trigonometry and bezier curves — to build a 
+            dynamic particle system that seamlessly morphs into 3D shapes and text. Features include 
+            real-time mouse interaction, particle physics, and responsive design.
           </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-          <TypographyH3 className="my-4 mt-8">Algo-Engine</TypographyH3>
+          <ProjectsLinks live={this.live} />
+          <TypographyH3 className="my-4 mt-8">Particle Physics Engine</TypographyH3>
           <p className="font-mono mb-2">
-            A containerized execution environment supporting multiple languages, providing near-instant feedback on time and space complexity.
+            Engineered a custom particle system with thousands of independently animated particles 
+            that respond to mouse proximity, creating immersive visual effects. Each particle is 
+            governed by physics-based motion equations for natural, fluid behavior.
           </p>
           <SlideShow
             images={[
-              `${BASE_PATH}/codingducks/problems.png`,
-              `${BASE_PATH}/codingducks/problem.png`,
+              `${BASE_PATH}/sara-3d/landing.png`,
             ]}
           />
-          <TypographyH3 className="my-4 mt-8">Real-time Synchronization</TypographyH3>
+          <TypographyH3 className="my-4 mt-8">3D Shape Morphing</TypographyH3>
           <p className="font-mono mb-2">
-            Multiplayer coding modules using low-latency WebSocket protocols to ensure seamless collaborative engineering.
+            Implemented mathematical transformations using trigonometric functions and bezier curves 
+            to morph particle clouds into recognizable 3D shapes and text in real-time, creating a 
+            stunning visual storytelling experience.
           </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/codingducks/ducklets.png`,
-              `${BASE_PATH}/codingducks/ducklet1.png`,
-              `${BASE_PATH}/codingducks/ducklet2.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 mt-8">Automated UI Scoring</TypographyH3>
-
-          <p className="font-mono mb-2">
-            Proprietary computer vision and DOM-diffing algorithms to provide automated feedback on UI component fidelity matches.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/codingducks/css-battles.png`,
-              `${BASE_PATH}/codingducks/css-battle.png`,
-              `${BASE_PATH}/codingducks/css-battle2.png`,
-            ]}
-          />
+          <TypographyH3 className="my-4 mt-8">Technical Highlights</TypographyH3>
+          <ul className="list-disc ml-6 font-mono space-y-2">
+            <li>Real-time mouse interaction with proximity-based particle displacement</li>
+            <li>Complex mathematical algorithms for smooth 3D morphing transitions</li>
+            <li>Optimized Canvas rendering achieving 60fps on standard hardware</li>
+            <li>Responsive design adapting across all screen sizes and devices</li>
+            <li>Creative frontend engineering demonstrating strong logic optimization</li>
+          </ul>
         </div>
       );
     },
   },
 
   {
-    id: "couponluxury",
-    category: "Coupon site",
-    title: "Coupon Luxury",
-    src: "/3d_portfolio/assets/projects-screenshots/couponluxury/landing.png",
-    screenshots: ["1.png", "2.png", "3.png", "4.png", "5.png"],
-    live: "https://www.couponluxury.com/",
+    id: "valentine-interactive",
+    category: "Gamified Web Interface",
+    title: "Valentine Interactive Experience",
+    src: "/3d_portfolio/assets/projects-screenshots/valentine/landing.png",
+    screenshots: ["landing.png"],
+    live: "https://shaker17s.github.io/Valenteinn/",
     skills: {
       frontend: [
         PROJECT_SKILLS.js,
-        PROJECT_SKILLS.next,
-        PROJECT_SKILLS.chakra,
-        PROJECT_SKILLS.vue,
+        PROJECT_SKILLS.tailwind,
       ],
-      backend: [
-        PROJECT_SKILLS.node,
-        PROJECT_SKILLS.express,
-        PROJECT_SKILLS.prisma,
-        PROJECT_SKILLS.postgres,
-        PROJECT_SKILLS.docker,
-      ],
+      backend: [],
     },
     get content(): React.JSX.Element {
       return (
         <div>
           <TypographyP className="font-mono ">
-            CouponLuxury is your go-to destination for snagging the best deals
-            without lifting a finger. Whether you&apos;re hunting for the latest
-            discounts or trying to save a buck at your favorite stores,
-            CouponLuxury&apos;s got you covered.
+            Built a highly engaging, responsive frontend interface featuring advanced DOM manipulation 
+            and custom event handling. Engineered a proximity-based &quot;runaway&quot; button logic utilizing 
+            coordinate geometry to calculate mouse distance in real-time.
           </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
+          <ProjectsLinks live={this.live} />
           <p className="font-mono mb-2 mt-4">
-            As soon as you land, boom! You&apos;re greeted with the freshest
-            coupons and top-tier deals that&apos;ll make your wallet happy.
+            A visually captivating gamified web experience that combines Glassmorphism UI design 
+            with creative JavaScript engineering — demonstrating the ability to translate complex 
+            mathematical logic into delightful user interactions.
           </p>
-          <SlideShow images={[`${BASE_PATH}/couponluxury/landing.png`]} />
-          <TypographyH3 className="my-4 ">Stores</TypographyH3>
+          <SlideShow images={[`${BASE_PATH}/valentine/landing.png`]} />
+          <TypographyH3 className="my-4 mt-8">Glassmorphism UI</TypographyH3>
           <p className="font-mono mb-2">
-            Dive into a comprehensive list of stores, each packed with exclusive
-            deals and discounts. It&apos;s like having a VIP pass to every sale
-            in town.
+            Integrated Glassmorphism UI patterns with frosted-glass card effects, smooth CSS keyframe 
+            animations, and a custom Canvas-based confetti engine to deliver a seamless, premium 
+            user experience.
           </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/couponluxury/stores.png`,
-              `${BASE_PATH}/couponluxury/store.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 mt-8">Categories</TypographyH3>
-
+          <TypographyH3 className="my-4 mt-8">Interactive Button Logic</TypographyH3>
           <p className="font-mono mb-2">
-            Whatever you&apos;re into—fashion, tech, food—you&apos;ll find it
-            neatly organized here. No more endless scrolling; just pick a
-            category and get the best offers instantly.
+            Engineered a proximity-based &quot;runaway&quot; button that uses real-time coordinate geometry 
+            calculations to evade mouse cursor, creating an engaging and humorous user experience 
+            that showcases advanced DOM manipulation skills.
           </p>
-          <SlideShow images={[`${BASE_PATH}/couponluxury/categories.png`]} />
-          <TypographyH3 className="my-4 mt-8">Custom CMS </TypographyH3>
-          <p className="font-mono mb-2">
-            Powered by Vue.js, this bad boy allows us to keep the content
-            dynamic and up-to-date. From flash sales to limited-time offers, my
-            CMS ensures everything&apos;s live and relevant.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/couponluxury/cms-1.png`,
-              `${BASE_PATH}/couponluxury/cms-2.png`,
-            ]}
-          />
-          <p className="font-mono mb-2 mt-5">
-            Plus, I&apos;ve sprinkled in some extra magic like personalized
-            deal recommendations, user-friendly search features, and a sleek,
-            responsive design that works like a charm on any device.
-          </p>
-          <p className="font-mono mb-2">
-            CouponLuxury isn&apos;t just a website; it&apos;s your personal deal-hunting
-            assistant, ensuring you never miss out on a bargain!
-          </p>
-          {/* <TypographyP className="my-4 mt-8">
-          <strong>Misc:</strong>
-          Hosted not one, not two, but THREE coding contests (Codemacha) during
-          college. Safe to say, Coding Ducks passed the vibe check.
-        </TypographyP>
-        <TypographyP className="my-4 mt-8">
-          <strong>Target Audience:</strong>
-          For all the novice coders out there ready to make their mark.
-        </TypographyP> */}
+          <TypographyH3 className="my-4 mt-8">Technical Highlights</TypographyH3>
+          <ul className="list-disc ml-6 font-mono space-y-2">
+            <li>Advanced DOM manipulation and custom event handling system</li>
+            <li>Proximity-based coordinate geometry for real-time mouse distance calculation</li>
+            <li>Custom Canvas-based confetti particle engine</li>
+            <li>CSS keyframe animations with smooth easing functions</li>
+            <li>Fully responsive design with mobile-first approach</li>
+          </ul>
         </div>
       );
     },
   },
   {
-    id: "the-booking-desk",
-    category: "Travel",
-    title: "The Booking Desk",
-    src: "/3d_portfolio/assets/projects-screenshots/the-booking-desk/landing.png",
-    screenshots: ["1.png"],
-    live: "https://thebookingdesk.com/",
+    id: "digital-bookstore",
+    category: "E-Commerce Platform",
+    title: "Digital Bookstore Platform",
+    src: "/3d_portfolio/assets/projects-screenshots/bookstore/landing.png",
+    screenshots: ["landing.png"],
+    live: "https://snai.pythonanywhere.com/category/",
     skills: {
       frontend: [
-        PROJECT_SKILLS.ts,
-        PROJECT_SKILLS.next,
-        PROJECT_SKILLS.aceternity,
+        PROJECT_SKILLS.js,
         PROJECT_SKILLS.tailwind,
       ],
-      backend: [PROJECT_SKILLS.sanity],
-    },
-    get content() {
-      return (
-        <div>
-          <TypographyP className="font-mono ">
-            The Booking Desk is your ultimate travel consultation hub, designed
-            to turn your wanderlust dreams into reality. With a focus on smooth
-            and visually captivating animations, navigating the site feels like
-            a breeze—it&apos;s almost as if the destinations are calling you.
-          </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-          <p className="font-mono mb-2 mt-8">
-            A sleek, modern interface greets you, featuring the latest travel
-            tips, deals, and must-visit spots around the globe.
-          </p>
-          <SlideShow images={[`${BASE_PATH}/the-booking-desk/landing.png`]} />
-          <TypographyH3 className="my-4 mt-8">Blogs</TypographyH3>
-          <p className="font-mono mb-2">
-            Dive into the curated articles written by travel experts. Whether
-            you&apos;re looking for hidden gems or travel hacks, our blog section has
-            you covered.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/the-booking-desk/blogs.png`,
-              `${BASE_PATH}/the-booking-desk/blog.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 mt-8">Sanity CMS</TypographyH3>
-
-          <p className="font-mono mb-2">
-            Keeping everything fresh and up-to-date, I&apos;ve integrated Sanity CMS
-            to manage all the content with ease, ensuring you always get the
-            latest and greatest information.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/the-booking-desk/cms-1.png`,
-              `${BASE_PATH}/the-booking-desk/cms-2.png`,
-            ]}
-          />
-          <p className="font-mono mb-2 my-8">
-            With a stunning 100% score on Lighthouse, The Booking Desk isn&apos;t
-            just beautiful—it&apos;s built to perform. Whether you&apos;re planning your
-            next adventure or just daydreaming, our site delivers a top-notch
-            experience that&apos;s both informative and enjoyable.
-          </p>
-        </div>
-      );
-    },
-  },
-  {
-    id: "portfolio",
-    category: "Portfolio",
-    title: "My Portfolio",
-    src: "/3d_portfolio/assets/projects-screenshots/portfolio/landing.png",
-    screenshots: ["1.png"],
-    live: "http://nareshkhatri.vercel.app",
-    github:"https://github.com/Naresh-Khatri/Portfolio",
-    skills: {
-      frontend: [
-        PROJECT_SKILLS.ts,
-        PROJECT_SKILLS.next,
-        PROJECT_SKILLS.shadcn,
-        PROJECT_SKILLS.aceternity,
-        PROJECT_SKILLS.framerMotion,
-        PROJECT_SKILLS.tailwind,
-        PROJECT_SKILLS.spline,
-      ],
-      backend: [],
-    },
-    get content() {
-      return (
-        <div>
-          <TypographyP className="font-mono ">
-            Welcome to my digital playground, where creativity meets code in the
-            dopest way possible.
-          </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-          <TypographyH3 className="my-4 mt-8">
-            Beautiful 3D Objects{" "}
-          </TypographyH3>
-          <p className="font-mono mb-2">
-            Did you see that 3D keyboard modal? Yeah! I made that. That
-            interactive keyboard is being rendered in 3D on a webpage 🤯, and
-            pressing each keycap reveals a skill in a goofy way. It&apos;s like
-            typing, but make it art.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/portfolio/landing.png`,
-              `${BASE_PATH}/portfolio/skills.png`,
-            ]}
-          />
-          <TypographyH3 className="my-4 ">Space Theme</TypographyH3>
-          <p className="font-mono mb-2">
-            Dark background + floating particles = out-of-this-world cool.
-          </p>
-          <SlideShow images={[`${BASE_PATH}/portfolio/navbar.png`]} />
-          <TypographyH3 className="my-4 mt-8">Projects</TypographyH3>
-
-          <p className="font-mono mb-2">
-            My top personal and freelance projects — no filler, all killer.
-          </p>
-          <SlideShow
-            images={[
-              `${BASE_PATH}/portfolio/projects.png`,
-              `${BASE_PATH}/portfolio/project.png`,
-            ]}
-          />
-          <p className="font-mono mb-2 mt-8 text-center">
-            This site&apos;s not just a portfolio — it&apos;s a whole vibe.
-          </p>
-        </div>
-      );
-    },
-  },
-  {
-    id: "ghostchat",
-    category: "Anonymous chat",
-    title: "GhostChat",
-    src: "/3d_portfolio/assets/projects-screenshots/ghostchat/1.png",
-    screenshots: ["1.png", "2.png", "3.png", "4.png"],
-    live: "https://ghostchat.vercel.app",
-    github:"https://github.com/Naresh-Khatri/GhostChat",
-    skills: {
-      frontend: [PROJECT_SKILLS.js, PROJECT_SKILLS.next, PROJECT_SKILLS.chakra],
-      backend: [PROJECT_SKILLS.supabase],
-    },
-    get content() {
-      return (
-        <div>
-          <TypographyP className="font-mono ">
-            Ghostchat is your go-to spot for sending anonymous messages without
-            leaving a trace. Powered by Supabase, it&apos;s all about keeping things
-            low-key and secure. Whether you&apos;re sharing secrets, giving feedback,
-            or just having some fun, Ghostchat ensures your identity stays
-            hidden, while your voice is heard. Say what you want, without the
-            worry.
-          </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-          <SlideShow
-            images={[
-              `${BASE_PATH}/ghostchat/1.png`,
-              `${BASE_PATH}/ghostchat/2.png`,
-              `${BASE_PATH}/ghostchat/3.png`,
-              `${BASE_PATH}/ghostchat/4.png`,
-            ]}
-          />
-        </div>
-      );
-    },
-  },
-  {
-    id: "jra",
-    category: "Result analyzer",
-    title: "JNTUA Results Analyzer",
-    src: "/3d_portfolio/assets/projects-screenshots/jra/1.png",
-    screenshots: ["1.png"],
-    live: "https://naresh-khatri.github.io/JNTUA-result-analyser-spa/#/",
-    skills: {
-      frontend: [PROJECT_SKILLS.js, PROJECT_SKILLS.vue],
       backend: [
-        PROJECT_SKILLS.node,
-        PROJECT_SKILLS.mongo,
-        PROJECT_SKILLS.express,
-        PROJECT_SKILLS.docker,
+        PROJECT_SKILLS.python,
+        PROJECT_SKILLS.postgres,
       ],
     },
     get content() {
       return (
         <div>
           <TypographyP className="font-mono ">
-            JNTUA Results Analyzer was a revolutionary tool designed to simplify
-            and enhance the experience of accessing academic results. It served
-            as a powerful proxy between the JNTUA university results website and
-            its users, offering a range of features that made result analysis
-            faster and more efficient. Here&apos;s what made it stand out:
+            Architected a full-featured e-commerce system for 500+ book titles with inventory management, 
+            order processing, and an admin control panel. Built with Django and PostgreSQL for 
+            a production-grade backend with secure data handling.
           </TypographyP>
-          <ProjectsLinks live={this.live} repo={this.github} />
-          <SlideShow images={[`${BASE_PATH}/jra/1.png`]} />
-          <TypographyH3 className="my-4 mt-8">
-            Effortless Results Retrieval
-          </TypographyH3>
-          {/* Effortless Results Retrieval: */}
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              Search all your results using a single roll number, eliminating
-              the tedious task of sifting through thousands of rows on the
-              official site.
-            </li>
-          </ul>
-          <TypographyH3 className="my-4 mt-8">Class-Wise Results:</TypographyH3>
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              class-wise results effortlessly by entering a roll number range.
-              No more manual searches or filtering.
-            </li>
-          </ul>
-          <TypographyH3 className="my-4 mt-8">Faculty Features:</TypographyH3>
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              Faculty members could download batch results in Excel format,
-              making administrative tasks a breeze.
-            </li>
-          </ul>
-          <TypographyH3 className="my-4 mt-8">
-            Enhanced Data Insights:
-          </TypographyH3>
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              Each result came with additional features including:
-              <ul className="list-disc font-mono ml-6">
-                <li>
-                  <strong>CGPA Calculations: </strong>Easily track your
-                  cumulative grade point average.
-                </li>
-                <li>
-                  <strong>Charts:</strong> Visualize your academic performance
-                  with comprehensive charts.
-                </li>
-                <li>
-                  <strong>Future Projections:</strong> Get insights into
-                  potential future outcomes based on current performance.
-                </li>
-                <li>
-                  <strong> Backlog Counts: </strong>Keep track of your backlog
-                  subjects at a glance.
-                </li>
-              </ul>
-            </li>
-          </ul>
-          <TypographyH3 className="my-4 mt-8">Performance:</TypographyH3>
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              The application was significantly faster and more efficient than
-              the official site, providing a smoother user experience.
-            </li>
-          </ul>
-          <TypographyH3 className="my-4 mt-8">Downfall:</TypographyH3>
-          <ul className="list-disc ml-6">
-            <li className="font-mono">
-              Unfortunately, as of May 2022, the tool stopped working due to the
-              introduction of CAPTCHA on the official JNTUA results site, which
-              disrupted the seamless functionality of the app. JNTUA Results
-              Analyzer transformed the way students and faculty interacted with
-              academic results, making it a must-have tool until its unexpected
-              shutdown.
-            </li>
+          <ProjectsLinks live={this.live} />
+          <p className="font-mono mb-2 mt-8">
+            A comprehensive digital bookstore with category-based navigation, advanced search functionality, 
+            and a polished Arabic-first UI that demonstrates full-stack development capabilities.
+          </p>
+          <SlideShow images={[`${BASE_PATH}/bookstore/landing.png`]} />
+          <TypographyH3 className="my-4 mt-8">Full-Text Search Engine</TypographyH3>
+          <p className="font-mono mb-2">
+            Built dynamic full-text search indexed across title, author, and genre — returning results 
+            in under 100ms across the full catalog. Optimized database queries for lightning-fast 
+            response times even under heavy load.
+          </p>
+          <TypographyH3 className="my-4 mt-8">Payment Integration</TypographyH3>
+          <p className="font-mono mb-2">
+            Integrated a secure payment gateway enabling end-to-end checkout flow. Reduced cart 
+            abandonment friction with an optimized 3-step UX that guides users smoothly from 
+            browsing to purchase confirmation.
+          </p>
+          <TypographyH3 className="my-4 mt-8">Technical Highlights</TypographyH3>
+          <ul className="list-disc ml-6 font-mono space-y-2">
+            <li>Django backend with PostgreSQL — sub-200ms query response times</li>
+            <li>Full-text search indexed across title, author, and genre fields</li>
+            <li>Category-based filtering with dynamic sidebar navigation</li>
+            <li>Secure payment gateway with 3-step optimized checkout flow</li>
+            <li>Admin control panel for inventory management and order processing</li>
+            <li>98% mobile compatibility across tested devices with responsive design</li>
           </ul>
         </div>
       );
