@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 const Spline = React.lazy(() => import("@splinetool/react-spline"));
 import { Skill, SkillNames, SKILLS } from "@/data/constants";
-import { sleep } from "@/lib/utils";
+import { sleep, cn } from "@/lib/utils";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { usePreloader } from "./preloader";
 import { useTheme } from "next-themes";
@@ -38,24 +38,40 @@ const AnimatedBackground = () => {
   // --- Event Handlers ---
 
   const handleMouseHover = (e: SplineEvent) => {
-    if (!splineApp || selectedSkillRef.current?.name === e.target.name) return;
+    if (!splineApp) return;
 
-    if (e.target.name === "body" || e.target.name === "platform") {
-      if (selectedSkillRef.current) playReleaseSound();
-      setSelectedSkill(null);
-      selectedSkillRef.current = null;
-      if (splineApp.getVariable("heading") && splineApp.getVariable("desc")) {
-        splineApp.setVariable("heading", "");
-        splineApp.setVariable("desc", "");
+    if (e.target.name === "body" || e.target.name === "platform" || e.target.name === "keyboard") {
+      if (selectedSkillRef.current) {
+        playReleaseSound();
+        const prevKeycap = splineApp.findObjectByName(selectedSkillRef.current.name);
+        if (prevKeycap) gsap.to(prevKeycap.position, { y: 50, duration: 0.3, ease: "bounce.out" });
+        
+        setSelectedSkill(null);
+        selectedSkillRef.current = null;
+        try {
+          splineApp.setVariable("heading", "");
+          splineApp.setVariable("desc", "");
+        } catch { /* ignore */ }
       }
-    } else {
-      if (!selectedSkillRef.current || selectedSkillRef.current.name !== e.target.name) {
-        const skill = SKILLS[e.target.name as SkillNames];
-        if (skill) {
-          if (selectedSkillRef.current) playReleaseSound();
-          playPressSound();
-          setSelectedSkill(skill);
-          selectedSkillRef.current = skill;
+      return;
+    }
+
+    if (!selectedSkillRef.current || selectedSkillRef.current.name !== e.target.name) {
+      const skill = SKILLS[e.target.name as SkillNames];
+      if (skill) {
+        if (selectedSkillRef.current) {
+          playReleaseSound();
+          const prevKeycap = splineApp.findObjectByName(selectedSkillRef.current.name);
+          if (prevKeycap) gsap.to(prevKeycap.position, { y: 50, duration: 0.3, ease: "bounce.out" });
+        }
+        playPressSound();
+        setSelectedSkill(skill);
+        selectedSkillRef.current = skill;
+        
+        const currKeycap = splineApp.findObjectByName(skill.name);
+        if (currKeycap) {
+          gsap.killTweensOf(currKeycap.position);
+          gsap.to(currKeycap.position, { y: 90, duration: 0.3, ease: "back.out(2)" });
         }
       }
     }
@@ -74,12 +90,19 @@ const AnimatedBackground = () => {
       );
     };
 
-    splineApp.addEventListener("keyUp", () => {
+    splineApp.addEventListener("keyUp", (e) => {
       if (!splineApp || isInputFocused()) return;
       playReleaseSound();
-      splineApp.setVariable("heading", "");
-      splineApp.setVariable("desc", "");
+      if (e.target.name && SKILLS[e.target.name as SkillNames]) {
+        const keycap = splineApp.findObjectByName(e.target.name);
+        if (keycap) gsap.to(keycap.position, { y: 50, duration: 0.2, ease: "power2.out" });
+      }
+      try {
+        splineApp.setVariable("heading", "");
+        splineApp.setVariable("desc", "");
+      } catch { /* ignore */ }
     });
+    
     splineApp.addEventListener("keyDown", (e) => {
       if (!splineApp || isInputFocused()) return;
       const skill = SKILLS[e.target.name as SkillNames];
@@ -87,10 +110,15 @@ const AnimatedBackground = () => {
         playPressSound();
         setSelectedSkill(skill);
         selectedSkillRef.current = skill;
-        splineApp.setVariable("heading", skill.label);
-        splineApp.setVariable("desc", skill.shortDescription);
+        try {
+          splineApp.setVariable("heading", skill.label);
+          splineApp.setVariable("desc", skill.shortDescription);
+        } catch { /* ignore */ }
+        const keycap = splineApp.findObjectByName(skill.name);
+        if (keycap) gsap.to(keycap.position, { y: 30, duration: 0.1, ease: "power2.in" });
       }
     });
+    
     splineApp.addEventListener("mouseHover", handleMouseHover);
   };
 
@@ -298,18 +326,16 @@ const AnimatedBackground = () => {
     const textMobileDark = splineApp.findObjectByName("text-mobile-dark");
     const textMobileLight = splineApp.findObjectByName("text-mobile");
 
-    if (!textDesktopDark || !textDesktopLight || !textMobileDark || !textMobileLight) return;
-
     const setVisibility = (
       dDark: boolean,
       dLight: boolean,
       mDark: boolean,
       mLight: boolean
     ) => {
-      textDesktopDark.visible = dDark;
-      textDesktopLight.visible = dLight;
-      textMobileDark.visible = mDark;
-      textMobileLight.visible = mLight;
+      if (textDesktopDark) textDesktopDark.visible = dDark;
+      if (textDesktopLight) textDesktopLight.visible = dLight;
+      if (textMobileDark) textMobileDark.visible = mDark;
+      if (textMobileLight) textMobileLight.visible = mLight;
     };
 
     if (activeSection !== "skills") {
@@ -327,9 +353,11 @@ const AnimatedBackground = () => {
 
   useEffect(() => {
     if (!selectedSkill || !splineApp) return;
-    splineApp.setVariable("heading", selectedSkill.label);
-    splineApp.setVariable("desc", selectedSkill.shortDescription);
-  }, [selectedSkill]);
+    try {
+      splineApp.setVariable("heading", selectedSkill.label);
+      splineApp.setVariable("desc", selectedSkill.shortDescription);
+    } catch { /* ignore */ }
+  }, [selectedSkill, splineApp]);
 
   // Handle rotation and teardown animations based on active section
   useEffect(() => {
@@ -434,8 +462,21 @@ const AnimatedBackground = () => {
           bypassLoading();
         }}
         scene="/3d_portfolio/assets/skills-keyboard.spline"
-
       />
+      {/* HTML Overlay for Skill Details */}
+      <div 
+        className={cn(
+          "fixed top-1/4 md:top-1/3 left-4 md:left-12 max-w-sm p-6 rounded-2xl transition-all duration-500 ease-out z-50 pointer-events-none backdrop-blur-md border border-white/10 shadow-2xl",
+          activeSection === "skills" && selectedSkill 
+            ? "opacity-100 translate-y-0 bg-white/40 dark:bg-black/40 text-black dark:text-white" 
+            : "opacity-0 translate-y-4"
+        )}
+      >
+        <h3 className="text-2xl font-bold mb-2 tracking-tight">{selectedSkill?.label}</h3>
+        <p className="text-sm md:text-base opacity-80 leading-relaxed font-medium">
+          {selectedSkill?.shortDescription}
+        </p>
+      </div>
     </Suspense>
   );
 };
