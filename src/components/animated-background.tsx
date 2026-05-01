@@ -43,43 +43,19 @@ const AnimatedBackground = () => {
   // --- Event Handlers ---
 
   const handleMouseHover = (e: SplineEvent) => {
-    // User requested to disable hover physical animations.
-    // We'll keep hover purely functional for Spline's internal variables if they exist,
-    // but without moving the keycaps.
     if (!splineApp || activeSectionRef.current !== "skills") return;
 
+    // Ignore non-key objects
     if (e.target.name === "body" || e.target.name === "platform" || e.target.name === "keyboard") {
-      return; // Do nothing on background hover
+      return;
     }
-  };
 
-  const handleSplineInteractions = () => {
-    if (!splineApp) return;
-
-    const isInputFocused = () => {
-      const activeElement = document.activeElement;
-      return (
-        activeElement &&
-        (activeElement.tagName === "INPUT" ||
-          activeElement.tagName === "TEXTAREA" ||
-          (activeElement as HTMLElement).isContentEditable)
-      );
-    };
-
-    splineApp.addEventListener("keyUp", (e) => {
-      if (!splineApp || isInputFocused() || activeSectionRef.current !== "skills") return;
-      playReleaseSound();
-      // WE DO NOT RESET THE KEYCAP OR TEXT ON KEYUP! 
-      // The user wants it to stay down until another key is pressed.
-    });
-    
-    splineApp.addEventListener("keyDown", (e) => {
-      if (!splineApp || isInputFocused() || activeSectionRef.current !== "skills") return;
-      
-      const skill = SKILLS[e.target.name as SkillNames];
-      if (skill) {
-        // If there's an already pressed skill, raise its keycap back up
-        if (selectedSkillRef.current && selectedSkillRef.current.name !== skill.name) {
+    const skill = SKILLS[e.target.name as SkillNames];
+    if (skill) {
+      // Only trigger if it's a new skill
+      if (!selectedSkillRef.current || selectedSkillRef.current.name !== e.target.name) {
+        // Reset the previous keycap position
+        if (selectedSkillRef.current) {
           const prevKeycap = splineApp.findObjectByName(selectedSkillRef.current.name);
           if (prevKeycap) gsap.to(prevKeycap.position, { y: 50, duration: 0.3, ease: "bounce.out" });
         }
@@ -93,13 +69,60 @@ const AnimatedBackground = () => {
           splineApp.setVariable("desc", skill.shortDescription);
         } catch { /* ignore */ }
         
-        // Push the new keycap down and keep it down
+        // Pop the new keycap UP
         const currKeycap = splineApp.findObjectByName(skill.name);
+        if (currKeycap) {
+          gsap.killTweensOf(currKeycap.position);
+          gsap.to(currKeycap.position, { y: 120, duration: 0.3, ease: "back.out(2)" });
+        }
+      }
+    }
+  };
+
+  const handleSplineInteractions = (app?: Application) => {
+    const currentApp = app || splineApp;
+    if (!currentApp) return;
+
+    const isInputFocused = () => {
+      const activeElement = document.activeElement;
+      return (
+        activeElement &&
+        (activeElement.tagName === "INPUT" ||
+          activeElement.tagName === "TEXTAREA" ||
+          (activeElement as HTMLElement).isContentEditable)
+      );
+    };
+
+    currentApp.addEventListener("keyUp", (e) => {
+      if (!currentApp || isInputFocused() || activeSectionRef.current !== "skills") return;
+      playReleaseSound();
+    });
+    
+    currentApp.addEventListener("keyDown", (e) => {
+      if (!currentApp || isInputFocused() || activeSectionRef.current !== "skills") return;
+      
+      const skill = SKILLS[e.target.name as SkillNames];
+      if (skill) {
+        if (selectedSkillRef.current && selectedSkillRef.current.name !== skill.name) {
+          const prevKeycap = currentApp.findObjectByName(selectedSkillRef.current.name);
+          if (prevKeycap) gsap.to(prevKeycap.position, { y: 50, duration: 0.3, ease: "bounce.out" });
+        }
+
+        playPressSound();
+        setSelectedSkill(skill);
+        selectedSkillRef.current = skill;
+        
+        try {
+          currentApp.setVariable("heading", skill.label);
+          currentApp.setVariable("desc", skill.shortDescription);
+        } catch { /* ignore */ }
+        
+        const currKeycap = currentApp.findObjectByName(skill.name);
         if (currKeycap) gsap.to(currKeycap.position, { y: 30, duration: 0.1, ease: "power2.in" });
       }
     });
     
-    splineApp.addEventListener("mouseHover", handleMouseHover);
+    currentApp.addEventListener("mouseHover", handleMouseHover);
   };
 
   // --- Animation Setup Helpers ---
@@ -447,6 +470,7 @@ const AnimatedBackground = () => {
         ref={splineContainer}
         onLoad={(app: Application) => {
           setSplineApp(app);
+          handleSplineInteractions(app);
           bypassLoading();
         }}
         scene="/3d_portfolio/assets/skills-keyboard.spline"
