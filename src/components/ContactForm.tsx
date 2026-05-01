@@ -45,7 +45,7 @@ const ContactForm = () => {
     setLoading(true);
     try {
       // Formspree works on static hosts like GitHub Pages — no server needed
-      const res = await fetch("https://formspree.io/f/xrbzqvrl", {
+      const res = await fetch("https://formspree.io/f/mqenkgyo", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
