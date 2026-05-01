@@ -22,6 +22,7 @@ const AnimatedBackground = () => {
   const splineContainer = useRef<HTMLDivElement>(null);
   const [splineApp, setSplineApp] = useState<Application>();
   const selectedSkillRef = useRef<Skill | null>(null);
+  const pressedKeysRef = useRef<Set<string>>(new Set());
 
   const { playPressSound, playReleaseSound } = useSounds();
 
@@ -43,6 +44,7 @@ const AnimatedBackground = () => {
   // --- Event Handlers ---
 
   const handleSplineInteractions = (app?: Application) => {
+  // Use ref to track pressed keys across events
     const currentApp = app || splineApp;
     if (!currentApp) return;
 
@@ -96,27 +98,36 @@ const AnimatedBackground = () => {
     currentApp.addEventListener("keyUp", (e) => {
       if (isInputFocused() || activeSectionRef.current !== "skills") return;
       playReleaseSound();
+      const key = e.target.name as string;
+      pressedKeysRef.current.delete(key);
+      // Reset keycap position on key release
+      const skill = SKILLS[key as SkillNames];
+      if (skill) {
+        const keycap = currentApp.findObjectByName(skill.name);
+        if (keycap) {
+          gsap.to(keycap.position, { y: 50, duration: 0.2, ease: "power2.out" });
+        }
+      }
     });
     
     currentApp.addEventListener("keyDown", (e) => {
       if (isInputFocused() || activeSectionRef.current !== "skills") return;
-      
-      const skill = SKILLS[e.target.name as SkillNames];
+      const key = e.target.name as string;
+      if (pressedKeysRef.current.has(key)) return; // prevent repeat while holding
+      pressedKeysRef.current.add(key);
+      const skill = SKILLS[key as SkillNames];
       if (skill) {
         if (selectedSkillRef.current && selectedSkillRef.current.name !== skill.name) {
           const prevKeycap = currentApp.findObjectByName(selectedSkillRef.current.name);
           if (prevKeycap) gsap.to(prevKeycap.position, { y: 50, duration: 0.3, ease: "bounce.out" });
         }
-
         playPressSound();
         setSelectedSkill(skill);
         selectedSkillRef.current = skill;
-        
         try {
           currentApp.setVariable("heading", skill.label);
           currentApp.setVariable("desc", skill.shortDescription);
-        } catch { /* ignore */ }
-        
+        } catch { }
         const currKeycap = currentApp.findObjectByName(skill.name);
         if (currKeycap) gsap.to(currKeycap.position, { y: 30, duration: 0.1, ease: "power2.in" });
       }
