@@ -27,6 +27,11 @@ const AnimatedBackground = () => {
 
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [activeSection, setActiveSection] = useState<Section>("hero");
+  const activeSectionRef = useRef<Section>("hero");
+
+  useEffect(() => {
+    activeSectionRef.current = activeSection;
+  }, [activeSection]);
 
   // Animation controllers refs
   const bongoAnimationRef = useRef<{ start: () => void; stop: () => void }>(null);
@@ -38,7 +43,7 @@ const AnimatedBackground = () => {
   // --- Event Handlers ---
 
   const handleMouseHover = (e: SplineEvent) => {
-    if (!splineApp) return;
+    if (!splineApp || activeSectionRef.current !== "skills") return;
 
     if (e.target.name === "body" || e.target.name === "platform" || e.target.name === "keyboard") {
       if (selectedSkillRef.current) {
@@ -71,7 +76,7 @@ const AnimatedBackground = () => {
         const currKeycap = splineApp.findObjectByName(skill.name);
         if (currKeycap) {
           gsap.killTweensOf(currKeycap.position);
-          gsap.to(currKeycap.position, { y: 90, duration: 0.3, ease: "back.out(2)" });
+          gsap.to(currKeycap.position, { y: 120, duration: 0.3, ease: "back.out(2)" });
         }
       }
     }
@@ -91,7 +96,7 @@ const AnimatedBackground = () => {
     };
 
     splineApp.addEventListener("keyUp", (e) => {
-      if (!splineApp || isInputFocused()) return;
+      if (!splineApp || isInputFocused() || activeSectionRef.current !== "skills") return;
       playReleaseSound();
       if (e.target.name && SKILLS[e.target.name as SkillNames]) {
         const keycap = splineApp.findObjectByName(e.target.name);
@@ -104,7 +109,7 @@ const AnimatedBackground = () => {
     });
     
     splineApp.addEventListener("keyDown", (e) => {
-      if (!splineApp || isInputFocused()) return;
+      if (!splineApp || isInputFocused() || activeSectionRef.current !== "skills") return;
       const skill = SKILLS[e.target.name as SkillNames];
       if (skill) {
         playPressSound();
@@ -463,20 +468,6 @@ const AnimatedBackground = () => {
         }}
         scene="/3d_portfolio/assets/skills-keyboard.spline"
       />
-      {/* HTML Overlay for Skill Details */}
-      <div 
-        className={cn(
-          "fixed top-1/4 md:top-1/3 left-4 md:left-12 max-w-sm p-6 rounded-2xl transition-all duration-500 ease-out z-50 pointer-events-none backdrop-blur-md border border-white/10 shadow-2xl",
-          activeSection === "skills" && selectedSkill 
-            ? "opacity-100 translate-y-0 bg-white/40 dark:bg-black/40 text-black dark:text-white" 
-            : "opacity-0 translate-y-4"
-        )}
-      >
-        <h3 className="text-2xl font-bold mb-2 tracking-tight">{selectedSkill?.label}</h3>
-        <p className="text-sm md:text-base opacity-80 leading-relaxed font-medium">
-          {selectedSkill?.shortDescription}
-        </p>
-      </div>
     </Suspense>
   );
 };
