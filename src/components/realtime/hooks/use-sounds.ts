@@ -14,22 +14,25 @@ export const useSounds = () => {
         const ctx = new AudioContext();
         audioContextRef.current = ctx;
 
-        const response = await fetch('/3d_portfolio/assets/keycap-sounds/press.mp3');
-        const arrayBuffer = await response.arrayBuffer();
-        const decodedBuffer = await ctx.decodeAudioData(arrayBuffer);
-        pressBufferRef.current = decodedBuffer;
+        try {
+          const response = await fetch('/3d_portfolio/assets/keycap-sounds/press.mp3');
+          const arrayBuffer = await response.arrayBuffer();
+          pressBufferRef.current = await ctx.decodeAudioData(arrayBuffer);
+        } catch { /* silently skip corrupted audio */ }
 
-        const releaseResponse = await fetch('/3d_portfolio/assets/keycap-sounds/release.mp3');
-        const releaseArrayBuffer = await releaseResponse.arrayBuffer();
-        const releaseDecodedBuffer = await ctx.decodeAudioData(releaseArrayBuffer);
-        releaseBufferRef.current = releaseDecodedBuffer;
+        try {
+          const releaseResponse = await fetch('/3d_portfolio/assets/keycap-sounds/release.mp3');
+          const releaseArrayBuffer = await releaseResponse.arrayBuffer();
+          releaseBufferRef.current = await ctx.decodeAudioData(releaseArrayBuffer);
+        } catch { /* silently skip corrupted audio */ }
 
-        const confettiResponse = await fetch('/3d_portfolio/assets/sounds/vine-boom.mp3');
-
-        const confettiArrayBuffer = await confettiResponse.arrayBuffer();
-        confettiBufferRef.current = await ctx.decodeAudioData(confettiArrayBuffer);
-      } catch (error) {
-        console.error("Failed to load keycap sound", error);
+        try {
+          const confettiResponse = await fetch('/3d_portfolio/assets/sounds/vine-boom.mp3');
+          const confettiArrayBuffer = await confettiResponse.arrayBuffer();
+          confettiBufferRef.current = await ctx.decodeAudioData(confettiArrayBuffer);
+        } catch { /* silently skip corrupted audio */ }
+      } catch {
+        // AudioContext not supported or failed to initialize
       }
     };
 
