@@ -42,43 +42,6 @@ const AnimatedBackground = () => {
 
   // --- Event Handlers ---
 
-  const handleMouseHover = (e: SplineEvent) => {
-    if (!splineApp || activeSectionRef.current !== "skills") return;
-
-    // Ignore non-key objects
-    if (e.target.name === "body" || e.target.name === "platform" || e.target.name === "keyboard") {
-      return;
-    }
-
-    const skill = SKILLS[e.target.name as SkillNames];
-    if (skill) {
-      // Only trigger if it's a new skill
-      if (!selectedSkillRef.current || selectedSkillRef.current.name !== e.target.name) {
-        // Reset the previous keycap position
-        if (selectedSkillRef.current) {
-          const prevKeycap = splineApp.findObjectByName(selectedSkillRef.current.name);
-          if (prevKeycap) gsap.to(prevKeycap.position, { y: 50, duration: 0.3, ease: "bounce.out" });
-        }
-
-        playPressSound();
-        setSelectedSkill(skill);
-        selectedSkillRef.current = skill;
-        
-        try {
-          splineApp.setVariable("heading", skill.label);
-          splineApp.setVariable("desc", skill.shortDescription);
-        } catch { /* ignore */ }
-        
-        // Pop the new keycap UP
-        const currKeycap = splineApp.findObjectByName(skill.name);
-        if (currKeycap) {
-          gsap.killTweensOf(currKeycap.position);
-          gsap.to(currKeycap.position, { y: 120, duration: 0.3, ease: "back.out(2)" });
-        }
-      }
-    }
-  };
-
   const handleSplineInteractions = (app?: Application) => {
     const currentApp = app || splineApp;
     if (!currentApp) return;
@@ -93,13 +56,50 @@ const AnimatedBackground = () => {
       );
     };
 
+    // Re-defined handleMouseHover inside to capture currentApp closure
+    const onMouseHover = (e: SplineEvent) => {
+      if (activeSectionRef.current !== "skills") return;
+
+      if (e.target.name === "body" || e.target.name === "platform" || e.target.name === "keyboard") {
+        return;
+      }
+
+      const skill = SKILLS[e.target.name as SkillNames];
+      if (skill) {
+        if (!selectedSkillRef.current || selectedSkillRef.current.name !== e.target.name) {
+          if (selectedSkillRef.current) {
+            const prevKeycap = currentApp.findObjectByName(selectedSkillRef.current.name);
+            if (prevKeycap) gsap.to(prevKeycap.position, { y: 50, duration: 0.3, ease: "bounce.out" });
+          }
+
+          playPressSound();
+          setSelectedSkill(skill);
+          selectedSkillRef.current = skill;
+          
+          try {
+            currentApp.setVariable("heading", skill.label);
+            currentApp.setVariable("desc", skill.shortDescription);
+          } catch { /* ignore */ }
+          
+          const currKeycap = currentApp.findObjectByName(skill.name);
+          if (currKeycap) {
+            gsap.killTweensOf(currKeycap.position);
+            gsap.to(currKeycap.position, { y: 120, duration: 0.3, ease: "back.out(2)" });
+          }
+        }
+      }
+    };
+
+    // Use correct camelCase event names from Spline types
+    currentApp.setGlobalEvents(true); // Ensure keyboard works globally
+
     currentApp.addEventListener("keyUp", (e) => {
-      if (!currentApp || isInputFocused() || activeSectionRef.current !== "skills") return;
+      if (isInputFocused() || activeSectionRef.current !== "skills") return;
       playReleaseSound();
     });
     
     currentApp.addEventListener("keyDown", (e) => {
-      if (!currentApp || isInputFocused() || activeSectionRef.current !== "skills") return;
+      if (isInputFocused() || activeSectionRef.current !== "skills") return;
       
       const skill = SKILLS[e.target.name as SkillNames];
       if (skill) {
@@ -122,7 +122,7 @@ const AnimatedBackground = () => {
       }
     });
     
-    currentApp.addEventListener("mouseHover", handleMouseHover);
+    currentApp.addEventListener("mouseHover", onMouseHover);
   };
 
   // --- Animation Setup Helpers ---
@@ -173,7 +173,7 @@ const AnimatedBackground = () => {
     gsap.set(kbd.position, heroState.position);
 
     // Section transitions
-    createSectionTimeline("#skills", "skills", "hero");
+    createSectionTimeline("#skills", "skills", "hero", "top 60%");
     createSectionTimeline("#projects", "projects", "skills", "top 70%");
     createSectionTimeline("#contact", "contact", "projects", "top 30%");
   };
