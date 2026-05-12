@@ -15,19 +15,19 @@ export const useSounds = () => {
         audioContextRef.current = ctx;
 
         try {
-          const response = await fetch('/3d_portfolio/assets/keycap-sounds/press.mp3');
+          const response = await fetch('/portfolio/assets/keycap-sounds/press.mp3');
           const arrayBuffer = await response.arrayBuffer();
           pressBufferRef.current = await ctx.decodeAudioData(arrayBuffer);
         } catch { /* silently skip corrupted audio */ }
 
         try {
-          const releaseResponse = await fetch('/3d_portfolio/assets/keycap-sounds/release.mp3');
+          const releaseResponse = await fetch('/portfolio/assets/keycap-sounds/release.mp3');
           const releaseArrayBuffer = await releaseResponse.arrayBuffer();
           releaseBufferRef.current = await ctx.decodeAudioData(releaseArrayBuffer);
         } catch { /* silently skip corrupted audio */ }
 
         try {
-          const confettiResponse = await fetch('/3d_portfolio/assets/sounds/vine-boom.mp3');
+          const confettiResponse = await fetch('/portfolio/assets/sounds/vine-boom.mp3');
           const confettiArrayBuffer = await confettiResponse.arrayBuffer();
           confettiBufferRef.current = await ctx.decodeAudioData(confettiArrayBuffer);
         } catch { /* silently skip corrupted audio */ }
