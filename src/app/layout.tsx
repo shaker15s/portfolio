@@ -62,11 +62,17 @@ export default function RootLayout({
   return (
     <html lang="en" className={[inter.variable, archivoBlack.variable, "font-display"].join(" ")} suppressHydrationWarning flush-mount="true">
       <head>
-        <Script
-          defer
-          src={process.env.UMAMI_DOMAIN}
-          data-website-id={process.env.UMAMI_SITE_ID}
-        ></Script>
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://frontend-cdn.perplexity.ai; img-src 'self' data: blob: https://shaker17s.github.io https://cdn.jsdelivr.net https://lh3.googleusercontent.com; connect-src 'self' wss: https://*.spline.design https://www.google-analytics.com; frame-src 'self' https://my.spline.design;"
+        />
+        {process.env.UMAMI_DOMAIN && process.env.UMAMI_SITE_ID && (
+          <Script
+            defer
+            src={process.env.UMAMI_DOMAIN}
+            data-website-id={process.env.UMAMI_SITE_ID}
+          />
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
