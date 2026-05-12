@@ -4,6 +4,9 @@ import React from "react";
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogDescription,
   ResponsiveDialogTrigger,
 } from "../ui/responsive-dialog";
 import { FloatingDock } from "../ui/floating-dock";
@@ -84,17 +87,19 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
 
         <ResponsiveDialogContent className="md:max-w-4xl md:h-[85vh] md:!flex md:flex-col md:overflow-hidden md:p-0 md:gap-0">
-          {/* Sticky header */}
-          <div className="shrink-0 border-b border-border bg-background/80 backdrop-blur-sm px-8 py-5">
+          <ResponsiveDialogHeader className="shrink-0 border-b border-border bg-background/80 backdrop-blur-sm px-8 py-5">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-4 min-w-0">
-                <h4 className="font-display text-xl md:text-2xl font-bold text-foreground tracking-tight truncate">
+                <ResponsiveDialogTitle className="font-display text-xl md:text-2xl font-bold text-foreground tracking-tight truncate">
                   {project.title}
-                </h4>
+                </ResponsiveDialogTitle>
                 <span className="shrink-0 text-[11px] uppercase tracking-widest text-muted-foreground border border-border rounded-full px-3 py-0.5">
                   {project.category}
                 </span>
               </div>
+              <ResponsiveDialogDescription className="sr-only">
+                Details about the {project.title} project.
+              </ResponsiveDialogDescription>
               <div className="shrink-0 flex items-center gap-4">
                 <Link href={project.live} target="_blank">
                   <button className="group flex items-center gap-2 bg-primary text-primary-foreground text-sm font-medium px-4 py-1.5 rounded-full hover:bg-primary/80 transition-colors">
@@ -104,7 +109,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 </Link>
               </div>
             </div>
-          </div>
+          </ResponsiveDialogHeader>
 
           {/* Scrollable content */}
           <ScrollArea className="flex-1" type="always" data-lenis-prevent>

@@ -64,7 +64,7 @@ export default function RootLayout({
       <head>
         <meta
           httpEquiv="Content-Security-Policy"
-          content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://frontend-cdn.perplexity.ai; img-src 'self' data: blob: https://shaker15s.github.io https://cdn.jsdelivr.net https://lh3.googleusercontent.com; connect-src 'self' wss: https://*.spline.design https://www.google-analytics.com https://unpkg.com https://fonts.gstatic.com https://frontend-cdn.perplexity.ai; frame-src 'self' https://my.spline.design;"
+          content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://www.googletagmanager.com https://www.google-analytics.com; worker-src 'self' blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://frontend-cdn.perplexity.ai; img-src 'self' data: blob: https://shaker15s.github.io https://cdn.jsdelivr.net https://lh3.googleusercontent.com; connect-src 'self' wss: https://*.spline.design https://www.google-analytics.com https://unpkg.com https://fonts.gstatic.com https://frontend-cdn.perplexity.ai; frame-src 'self' https://my.spline.design;"
         />
         {process.env.UMAMI_DOMAIN && process.env.UMAMI_SITE_ID && (
           <Script

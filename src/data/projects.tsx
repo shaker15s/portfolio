@@ -28,7 +28,7 @@ import {
   SiVuedotjs,
 } from "react-icons/si";
 import { TbBrandFramerMotion } from "react-icons/tb";
-const BASE_PATH = "/3d_portfolio/assets/projects-screenshots";
+const BASE_PATH = "/portfolio/assets/projects-screenshots";
 
 
 const ProjectsLinks = ({ live }: { live: string }) => {
@@ -227,7 +227,7 @@ const projects: Project[] = [
     id: "sara-3d-surprise",
     category: "Interactive 3D Experience",
     title: "Sara — Ultimate 3D Surprise",
-    src: "/3d_portfolio/assets/projects-screenshots/sara-3d/landing.png",
+    src: "/portfolio/assets/projects-screenshots/sara-3d/landing.png",
     screenshots: ["landing.png"],
     skills: {
       frontend: [
@@ -286,7 +286,7 @@ const projects: Project[] = [
     id: "valentine-interactive",
     category: "Gamified Web Interface",
     title: "Valentine Interactive Experience",
-    src: "/3d_portfolio/assets/projects-screenshots/valentine/landing.png",
+    src: "/portfolio/assets/projects-screenshots/valentine/landing.png",
     screenshots: ["landing.png"],
     live: "https://shaker17s.github.io/Valenteinn/",
     skills: {
@@ -339,7 +339,7 @@ const projects: Project[] = [
     id: "digital-bookstore",
     category: "E-Commerce Platform",
     title: "Digital Bookstore Platform",
-    src: "/3d_portfolio/assets/projects-screenshots/bookstore/landing.png",
+    src: "/portfolio/assets/projects-screenshots/bookstore/landing.png",
     screenshots: ["landing.png"],
     live: "https://snai.pythonanywhere.com/category/",
     skills: {

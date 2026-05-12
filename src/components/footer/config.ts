@@ -1,11 +1,11 @@
 const footer: { title: string; href: string }[] = [
   {
     title: "Blog",
-    href: "/blogs",
+    href: "#",
   },
   {
     title: "Newsletter",
-    href: "/news",
+    href: "#",
   },
 ];
 
