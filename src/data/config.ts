@@ -30,11 +30,11 @@ const config = {
   ],
   author: "Shaker Abdallah",
   email: "shakerabdallah66@gmail.com",
-  site: "https://shaker17s.github.io/3d_portfolio",
+  site: "https://shaker15s.github.io/portfolio",
 
   // for github stars button
-  githubUsername: "shaker17s",
-  githubRepo: "3d_portfolio",
+  githubUsername: "shaker15s",
+  githubRepo: "portfolio",
 
 
   get ogImg() {
@@ -45,7 +45,7 @@ const config = {
     linkedin: "https://www.linkedin.com/in/shaker-abdallah-79b0a1339/",
     instagram: "https://www.instagram.com/s_h_a_k_err/",
     facebook: "https://www.facebook.com/",
-    github: "https://github.com/Shaker17s",
+    github: "https://github.com/shaker15s",
   },
 };
 export { config };

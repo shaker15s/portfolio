@@ -2,8 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   output: 'export',
-  basePath: '/3d_portfolio',
-  assetPrefix: '/3d_portfolio',
+  basePath: '/portfolio',
   trailingSlash: true,
   images: {
     unoptimized: true,
